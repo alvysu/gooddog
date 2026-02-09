@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "question": "我們第一次見面的地點是？",
+    "hint": "想想那天的路口與味道",
+    "photo": "photo1.jpg",
+    "answer_hash_env": "Q1_HASH"
+  },
+  {
+    "id": 2,
+    "question": "你最喜歡我送你的哪一個禮物？",
+    "hint": "跟「時間」有關的那一個",
+    "photo": "photo2.jpg",
+    "answer_hash_env": "Q2_HASH"
+  },
+  {
+    "id": 3,
+    "question": "我們一起看的第一場電影叫什麼？",
+    "hint": "不是動作片，是會讓人眼眶紅紅的那種",
+    "photo": "photo3.jpg",
+    "answer_hash_env": "Q3_HASH"
+  },
+  {
+    "id": 4,
+    "question": "你記得我們第一次約會吃的餐廳嗎？",
+    "hint": "三個字，有「屋」",
+    "photo": "photo4.jpg",
+    "answer_hash_env": "Q4_HASH"
+  },
+  {
+    "id": 5,
+    "question": "我的生日是幾月幾號？",
+    "hint": "不是今天，是另一個特別的日子",
+    "photo": "photo5.jpg",
+    "answer_hash_env": "Q5_HASH"
+  }
+]

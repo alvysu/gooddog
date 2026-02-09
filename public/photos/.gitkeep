@@ -1,0 +1,3 @@
+# 請在此目錄放入題目對應的照片檔，檔名需與 data/questions.json 中的 photo 一致
+# 例如：photo1.jpg, photo2.jpg, photo3.jpg, photo4.jpg, photo5.jpg
+# 若暫無圖片，留空亦可，前端會顯示模糊鎖定狀態與預設背景

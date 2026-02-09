@@ -1,0 +1,20 @@
+{
+  "name": "birthday-unlock-card",
+  "version": "1.0.0",
+  "description": "生日解鎖卡片網站 - 答題解鎖照片，可部署至 Render",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["birthday", "unlock", "card"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  }
+}

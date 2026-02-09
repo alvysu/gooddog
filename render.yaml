@@ -1,0 +1,22 @@
+# Render Blueprint - 生日解鎖卡片網站
+# 部署時在 Render Dashboard 選擇 "New" -> "Blueprint" 並連到此 repo，或手動建立 Web Service 後照下方設定
+
+services:
+  - type: web
+    name: birthday-unlock-card
+    runtime: node
+    region: singapore
+
+    # 建置與啟動
+    buildCommand: npm install
+    startCommand: npm start
+
+    # 環境變數（在 Render Dashboard 的 Environment 中設定，勿提交敏感值）
+    # 必填：
+    #   ANSWER_SALT: 自訂一組隨機字串，用於答案雜湊
+    #   Q1_HASH, Q2_HASH, ... : 每題答案的 SHA256 雜湊（見 README 產生方式）
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # 以下在 Dashboard 手動新增：
+      # ANSWER_SALT, Q1_HASH, Q2_HASH, Q3_HASH, Q4_HASH, Q5_HASH

@@ -1,0 +1,310 @@
+/* 生日解鎖卡片 - 溫暖可愛、手機優先 */
+:root {
+  --bg: #fff8f5;
+  --card: #ffffff;
+  --accent: #e8a598;
+  --accent-dark: #c97b6e;
+  --text: #3d2c29;
+  --text-soft: #6b5b58;
+  --shadow: rgba(61, 44, 41, 0.08);
+  --shadow-strong: rgba(61, 44, 41, 0.12);
+  --radius: 16px;
+  --radius-sm: 12px;
+  --font-sans: 'Noto Sans TC', sans-serif;
+  --font-display: 'Yusei Magic', 'Noto Sans TC', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+#app {
+  min-height: 100vh;
+  padding: 1rem;
+  padding-bottom: 2rem;
+}
+
+/* ---------- Hero 生日卡片 ---------- */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.hero-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 32px var(--shadow), 0 2px 8px var(--shadow);
+  padding: 2rem 1.5rem;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 5vw, 2.25rem);
+  color: var(--accent-dark);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.hero-blessing {
+  color: var(--text-soft);
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 0 0.5rem;
+}
+
+.btn {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 4px 12px rgba(232, 165, 152, 0.4);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 6px 16px rgba(232, 165, 152, 0.5);
+}
+
+/* ---------- 解鎖區 ---------- */
+.unlock-section {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.unlock-section.hidden {
+  display: none;
+}
+
+.container {
+  padding: 0.5rem 0;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--accent-dark);
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+/* 題目卡片 */
+.question-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 20px var(--shadow);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.question-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+.answer-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.answer-input {
+  flex: 1;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  padding: 0.65rem 1rem;
+  border: 2px solid #eee;
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text);
+  transition: border-color 0.2s;
+}
+
+.answer-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.answer-input::placeholder {
+  color: #aaa;
+}
+
+.btn-submit {
+  background: var(--accent);
+  color: #fff;
+  padding: 0.65rem 1.25rem;
+  white-space: nowrap;
+}
+
+.hint-message {
+  font-size: 0.9rem;
+  color: var(--accent-dark);
+  margin-top: 0.5rem;
+}
+
+.error-message {
+  font-size: 0.9rem;
+  color: #c75c5c;
+  margin-top: 0.5rem;
+}
+
+.hint-message.hidden,
+.error-message.hidden {
+  display: none;
+}
+
+/* 相簿 */
+.gallery-wrap {
+  margin-top: 1.5rem;
+}
+
+.gallery-title {
+  font-size: 1.1rem;
+  color: var(--text-soft);
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+@media (min-width: 480px) {
+  .photo-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.photo-item {
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  position: relative;
+  background: #f0e8e5;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.photo-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.photo-item.locked {
+  cursor: not-allowed;
+}
+
+.photo-item.locked img {
+  filter: blur(12px);
+  transform: scale(1.05);
+}
+
+.photo-item .lock-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 248, 245, 0.6);
+  color: var(--text-soft);
+}
+
+.photo-item .lock-overlay svg {
+  width: 48px;
+  height: 48px;
+  opacity: 0.9;
+}
+
+/* 答對動畫 */
+.photo-item.unlock-pop {
+  animation: unlockPop 0.5s ease;
+}
+
+@keyframes unlockPop {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Confetti 容器 */
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.confetti-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: confettiFall 1.2s ease-out forwards;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-20px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* 工具類 */
+.hidden {
+  display: none !important;
+}
