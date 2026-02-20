@@ -18,6 +18,8 @@ const answerInput = document.getElementById('answerInput');
 const btnSubmit = document.getElementById('btnSubmit');
 const hintMessage = document.getElementById('hintMessage');
 const errorMessage = document.getElementById('errorMessage');
+const questionImageWrap = document.getElementById('questionImageWrap');
+const questionImage = document.getElementById('questionImage');
 const photoGrid = document.getElementById('photoGrid');
 const confettiContainer = document.getElementById('confettiContainer');
 const photoRevealOverlay = document.getElementById('photoRevealOverlay');
@@ -91,6 +93,7 @@ function renderQuestion() {
 
   if (idx < 0) {
     questionText.textContent = '恭喜你！所有回憶都解鎖了。';
+    if (questionImageWrap) questionImageWrap.classList.add('hidden');
     answerInput.style.display = 'none';
     btnSubmit.style.display = 'none';
     return;
@@ -98,6 +101,16 @@ function renderQuestion() {
 
   const q = config.questions[idx];
   questionText.textContent = q.question;
+  if (questionImageWrap && questionImage) {
+    if (q.question_image) {
+      questionImage.src = '/question-images/' + q.question_image;
+      questionImage.alt = '第' + q.id + '題圖片';
+      questionImageWrap.classList.remove('hidden');
+    } else {
+      questionImage.src = '';
+      questionImageWrap.classList.add('hidden');
+    }
+  }
   answerInput.style.display = '';
   btnSubmit.style.display = '';
   answerInput.focus();

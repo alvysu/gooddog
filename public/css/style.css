@@ -170,6 +170,24 @@ body {
   margin-bottom: 1.5rem;
 }
 
+.question-image-wrap {
+  margin-bottom: 1rem;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: #f5f0ee;
+}
+
+.question-image-wrap img {
+  display: block;
+  width: 100%;
+  max-height: 280px;
+  object-fit: contain;
+}
+
+.question-image-wrap.hidden {
+  display: none !important;
+}
+
 .question-text {
   font-size: 1.1rem;
   font-weight: 500;

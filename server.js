@@ -54,6 +54,7 @@ app.get('/api/config', (req, res) => {
     hint: q.clue != null ? q.clue : q.hint,
     photo: q.unlock_asset != null ? q.unlock_asset : q.photo,
     caption: q.caption != null ? q.caption : '',
+    question_image: q.question_image != null ? q.question_image : '',
   }));
   res.json({
     title,
