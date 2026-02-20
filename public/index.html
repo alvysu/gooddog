@@ -45,6 +45,17 @@
     </section>
   </div>
 
+  <!-- 答對時：彈出剛解鎖的那張照片 -->
+  <div id="photoRevealOverlay" class="photo-reveal-overlay hidden" aria-hidden="true">
+    <div class="photo-reveal-card">
+      <p class="photo-reveal-title">解鎖成功！</p>
+      <div class="photo-reveal-img-wrap">
+        <img id="photoRevealImg" src="" alt="解鎖的照片" />
+      </div>
+      <button type="button" class="btn btn-primary photo-reveal-btn" id="photoRevealClose">繼續</button>
+    </div>
+  </div>
+
   <!-- 答對時的簡單 confetti 容器 -->
   <div id="confettiContainer" class="confetti-container" aria-hidden="true"></div>
 

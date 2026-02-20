@@ -18,6 +18,9 @@ const hintMessage = document.getElementById('hintMessage');
 const errorMessage = document.getElementById('errorMessage');
 const photoGrid = document.getElementById('photoGrid');
 const confettiContainer = document.getElementById('confettiContainer');
+const photoRevealOverlay = document.getElementById('photoRevealOverlay');
+const photoRevealImg = document.getElementById('photoRevealImg');
+const photoRevealClose = document.getElementById('photoRevealClose');
 
 function loadUnlockedUpTo() {
   const raw = localStorage.getItem(STORAGE_KEY);
@@ -129,6 +132,34 @@ function showConfetti() {
   }
 }
 
+/**
+ * 答對後彈出該張解鎖照片，點「繼續」後執行 onClose
+ * @param {string} photoPath 照片檔名，例如 photo1.jpg
+ * @param {function} onClose 關閉彈窗後要執行的 callback
+ */
+function showPhotoReveal(photoPath, onClose) {
+  if (!photoRevealOverlay || !photoRevealImg) return;
+  photoRevealImg.src = '/photos/' + (photoPath || '');
+  photoRevealImg.alt = '解鎖的照片';
+  photoRevealOverlay.classList.remove('hidden');
+  photoRevealOverlay.setAttribute('aria-hidden', 'false');
+
+  const close = () => {
+    photoRevealOverlay.classList.add('hidden');
+    photoRevealOverlay.setAttribute('aria-hidden', 'true');
+    photoRevealClose.removeEventListener('click', close);
+    photoRevealOverlay.removeEventListener('click', handleOverlayClick);
+    if (typeof onClose === 'function') onClose();
+  };
+
+  const handleOverlayClick = (e) => {
+    if (e.target === photoRevealOverlay) close();
+  };
+
+  photoRevealClose.addEventListener('click', close);
+  photoRevealOverlay.addEventListener('click', handleOverlayClick);
+}
+
 function showHint(hint) {
   hintMessage.textContent = '💡 ' + (hint || '再想想～');
   hintMessage.classList.remove('hidden');
@@ -167,10 +198,13 @@ async function submitAnswer() {
       const newUpTo = data.unlockedUpTo != null ? data.unlockedUpTo : q.id;
       saveUnlockedUpTo(newUpTo);
       showConfetti();
-      renderPhotoGrid();
-      const newlyUnlocked = photoGrid.querySelector(`.photo-item:nth-child(${idx + 1})`);
-      if (newlyUnlocked) newlyUnlocked.classList.add('unlock-pop');
-      renderQuestion();
+      // 彈出「這一張」解鎖照片，答對一題就出現一張
+      showPhotoReveal(q.photo, () => {
+        renderPhotoGrid();
+        const newlyUnlocked = photoGrid.querySelector(`.photo-item:nth-child(${idx + 1})`);
+        if (newlyUnlocked) newlyUnlocked.classList.add('unlock-pop');
+        renderQuestion();
+      });
     } else {
       showHint(q.hint);
     }

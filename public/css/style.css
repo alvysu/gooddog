@@ -276,6 +276,74 @@ body {
   100% { transform: scale(1); opacity: 1; }
 }
 
+/* 答對後彈出：單張解鎖照片 */
+.photo-reveal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(61, 44, 41, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.photo-reveal-overlay.hidden {
+  display: none !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.photo-reveal-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 48px var(--shadow-strong);
+  padding: 1.5rem;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: scaleIn 0.35s ease;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.photo-reveal-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--accent-dark);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.photo-reveal-img-wrap {
+  width: 100%;
+  max-width: 320px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: #f0e8e5;
+  margin-bottom: 1.25rem;
+}
+
+.photo-reveal-img-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+  vertical-align: middle;
+}
+
+.photo-reveal-btn {
+  min-width: 140px;
+}
+
 /* Confetti 容器 */
 .confetti-container {
   position: fixed;

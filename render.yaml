@@ -11,12 +11,6 @@ services:
     buildCommand: npm install
     startCommand: npm start
 
-    # 環境變數（在 Render Dashboard 的 Environment 中設定，勿提交敏感值）
-    # 必填：
-    #   ANSWER_SALT: 自訂一組隨機字串，用於答案雜湊
-    #   Q1_HASH, Q2_HASH, ... : 每題答案的 SHA256 雜湊（見 README 產生方式）
     envVars:
       - key: NODE_ENV
         value: production
-      # 以下在 Dashboard 手動新增：
-      # ANSWER_SALT, Q1_HASH, Q2_HASH, Q3_HASH, Q4_HASH, Q5_HASH

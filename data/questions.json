@@ -1,37 +1,169 @@
-[
-  {
-    "id": 1,
-    "question": "我們第一次見面的地點是？",
-    "hint": "想想那天的路口與味道",
-    "photo": "photo1.jpg",
-    "answer_hash_env": "Q1_HASH"
+{
+  "meta": {
+    "title": "生日解鎖題庫",
+    "lang": "zh-TW",
+    "answer_normalization": "trim -> toLowerCase -> removeSpaces -> fullwidthToHalfwidth"
   },
-  {
-    "id": 2,
-    "question": "你最喜歡我送你的哪一個禮物？",
-    "hint": "跟「時間」有關的那一個",
-    "photo": "photo2.jpg",
-    "answer_hash_env": "Q2_HASH"
-  },
-  {
-    "id": 3,
-    "question": "我們一起看的第一場電影叫什麼？",
-    "hint": "不是動作片，是會讓人眼眶紅紅的那種",
-    "photo": "photo3.jpg",
-    "answer_hash_env": "Q3_HASH"
-  },
-  {
-    "id": 4,
-    "question": "你記得我們第一次約會吃的餐廳嗎？",
-    "hint": "三個字，有「屋」",
-    "photo": "photo4.jpg",
-    "answer_hash_env": "Q4_HASH"
-  },
-  {
-    "id": 5,
-    "question": "我的生日是幾月幾號？",
-    "hint": "不是今天，是另一個特別的日子",
-    "photo": "photo5.jpg",
-    "answer_hash_env": "Q5_HASH"
-  }
-]
+  "questions": [
+    {
+      "id": 1,
+      "type": "text",
+      "question": "你說「25歲啦，是我人生中最快樂的生日」那天是幾年幾月幾日？",
+      "clue": "格式：YYYY/MM/DD（或直接輸入 2025/10/21）",
+      "answers": ["2025/10/21", "2025-10-21", "2025.10.21", "2025年10月21日"],
+      "unlock_asset": "photo1.jpg"
+    },
+    {
+      "id": 2,
+      "type": "text",
+      "question": "你說一早和寶寶起床去吃哪一家？",
+      "clue": "店名四個字",
+      "answers": ["學田有意"],
+      "unlock_asset": "photo2.jpg"
+    },
+    {
+      "id": 3,
+      "type": "text",
+      "question": "你對「學田有意」的評語是什麼？（兩個字）",
+      "clue": "你說它是一次店之前的那句",
+      "answers": ["普通"],
+      "unlock_asset": "photo3.jpg"
+    },
+    {
+      "id": 4,
+      "type": "text",
+      "question": "你們下午一起做了什麼？",
+      "clue": "四個字，像是兼職的那種",
+      "answers": ["當家教", "一起當家教"],
+      "unlock_asset": "photo4.jpg"
+    },
+    {
+      "id": 5,
+      "type": "text",
+      "question": "晚上你說和誰他們一起吃飯，之後還去誰家續攤？（填人名）",
+      "clue": "人名兩個字",
+      "answers": ["雅欣", "雅馨"],
+      "unlock_asset": "photo5.jpg"
+    },
+    {
+      "id": 6,
+      "type": "text",
+      "question": "你心疼寶寶、怕寶寶怎麼樣？",
+      "clue": "兩個字",
+      "answers": ["感冒"],
+      "unlock_asset": "photo6.jpg"
+    },
+    {
+      "id": 7,
+      "type": "text",
+      "question": "你從廁所出來看到蛋糕時，你形容是什麼感覺？（兩個字）",
+      "clue": "你說「超級___」",
+      "answers": ["突然"],
+      "unlock_asset": "photo7.jpg"
+    },
+    {
+      "id": 8,
+      "type": "text",
+      "question": "你說「在看到 ____ 的時候就很開心了」；空格是什麼？",
+      "clue": "日常用品兩個字",
+      "answers": ["滑鼠"],
+      "unlock_asset": "photo8.jpg"
+    },
+    {
+      "id": 9,
+      "type": "text",
+      "question": "你轉頭後看到的其中一個禮物是「____項鍊」；空格是什麼？",
+      "clue": "四個字，跟山先生有關",
+      "answers": ["鱷魚山先生", "鱷魚山先生項鍊"],
+      "unlock_asset": "photo9.jpg"
+    },
+    {
+      "id": 10,
+      "type": "text",
+      "question": "你轉頭後看到的另一個禮物是什麼耳環？",
+      "clue": "三個字＋耳環",
+      "answers": ["小新耳環", "蠟筆小新耳環"],
+      "unlock_asset": "photo10.jpg"
+    },
+    {
+      "id": 11,
+      "type": "text",
+      "question": "你說寶寶「偷偷編的」禮物是什麼？",
+      "clue": "三個字",
+      "answers": ["捕夢網"],
+      "unlock_asset": "photo11.jpg"
+    },
+    {
+      "id": 12,
+      "type": "text",
+      "question": "你抱怨「還是看不到你的 ____ 欸」；空格是什麼？",
+      "clue": "兩個字",
+      "answers": ["日記"],
+      "unlock_asset": "photo12.jpg"
+    },
+    {
+      "id": 13,
+      "type": "text",
+      "question": "你提到「今天是跟寶寶的第一個生日！」那天午餐吃了學田的什麼？",
+      "clue": "一種麵包類，三個字",
+      "answers": ["帕尼尼"],
+      "unlock_asset": "photo13.jpg"
+    },
+    {
+      "id": 14,
+      "type": "text",
+      "question": "同一天你說晚餐去吃寶寶很喜歡的哪一家？",
+      "clue": "店名兩個字",
+      "answers": ["金寶"],
+      "unlock_asset": "photo14.jpg"
+    },
+    {
+      "id": 15,
+      "type": "text",
+      "question": "同一天你們的蛋糕是什麼口味？",
+      "clue": "兩個字",
+      "answers": ["巧克力", "巧克力蛋糕"],
+      "unlock_asset": "photo15.jpg"
+    },
+    {
+      "id": 16,
+      "type": "text",
+      "question": "你們聊「寶寶蛋沙拉」時，對方說加一點什麼很讚？",
+      "clue": "三個字，調味料",
+      "answers": ["辣椒粉"],
+      "unlock_asset": "photo16.jpg"
+    },
+    {
+      "id": 17,
+      "type": "text",
+      "question": "你說「綠橄欖也超好吃」，你形容它是「有點____的」？",
+      "clue": "兩個字",
+      "answers": ["辣辣"],
+      "unlock_asset": "photo17.jpg"
+    },
+    {
+      "id": 18,
+      "type": "text",
+      "question": "你們聊「新校卯叫甚麼名字」，你回答叫什麼？",
+      "clue": "三個英文字母（大小寫都算）",
+      "answers": ["Bmo", "BMO"],
+      "unlock_asset": "photo18.jpg"
+    },
+    {
+      "id": 19,
+      "type": "text",
+      "question": "你教對方 Bmo 的唸法是什麼？（注音）",
+      "clue": "四個符號（含聲調符號）",
+      "answers": ["ㄅㄧˉ某", "ㄅ一某"],
+      "unlock_asset": "photo19.jpg"
+    },
+    {
+      "id": 20,
+      "type": "text",
+      "question": "你們算錢時：他說錢包原本1500、剩1000，你最後用 LINE Pay 轉了多少元？",
+      "clue": "只填數字即可",
+      "answers": ["500", "500元", "nt$500", "nt$ 500", "NT$500", "NT$ 500"],
+      "unlock_asset": "photo20.jpg"
+    }
+  ]
+}

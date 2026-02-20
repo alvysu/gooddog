@@ -28,24 +28,34 @@ function loadJSON(filename) {
   }
 }
 
+// 取得題目陣列（支援 { meta, questions } 或純陣列）
+function loadQuestions() {
+  const raw = loadJSON('questions.json');
+  if (Array.isArray(raw)) return raw;
+  if (raw && Array.isArray(raw.questions)) return raw.questions;
+  return [];
+}
+
 /**
  * GET /api/config
- * 回傳標題、祝福文字、題目清單（不含答案與 answer_hash_env）
+ * 回傳標題、祝福文字、題目清單（不含答案）；題庫 meta.title 可覆寫標題
  */
 app.get('/api/config', (req, res) => {
   const siteConfig = loadJSON('site-config.json') || {
     title: 'Happy Birthday',
     blessing: '祝你生日快樂，願這份小驚喜帶給你笑容。',
   };
-  const questions = loadJSON('questions.json') || [];
-  const safeQuestions = questions.map(({ id, question, hint, photo }) => ({
-    id,
-    question,
-    hint,
-    photo,
+  const rawQuestions = loadJSON('questions.json');
+  const questions = loadQuestions();
+  const title = (rawQuestions && rawQuestions.meta && rawQuestions.meta.title) || siteConfig.title;
+  const safeQuestions = questions.map((q) => ({
+    id: q.id,
+    question: q.question,
+    hint: q.clue != null ? q.clue : q.hint,
+    photo: q.unlock_asset != null ? q.unlock_asset : q.photo,
   }));
   res.json({
-    title: siteConfig.title,
+    title,
     blessing: siteConfig.blessing,
     questions: safeQuestions,
   });
@@ -61,13 +71,13 @@ app.get('/api/config', (req, res) => {
  */
 app.post('/api/verify', (req, res) => {
   const { questionId, answer } = req.body || {};
-  const questions = loadJSON('questions.json') || [];
+  const questions = loadQuestions();
   const q = questions.find((item) => item.id === Number(questionId));
-  if (!q || !q.answer_hash_env) {
+  if (!q || !Array.isArray(q.answers) || q.answers.length === 0) {
     return res.status(400).json({ correct: false });
   }
 
-  const correct = verify(answer, q.answer_hash_env);
+  const correct = verify(answer, q.answers);
 
   // 擴充點：若使用 server-side session，可在此更新 session 的已解鎖題目，
   // 並計算 unlockedUpTo（例如已解鎖題目的最大 id）一併回傳。
