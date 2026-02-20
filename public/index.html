@@ -10,6 +10,11 @@
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
+  <!-- 右上角密語：輸入「養到爛狗」可一次解鎖全部照片 -->
+  <div class="secret-unlock-wrap">
+    <input type="text" id="secretUnlockInput" class="secret-unlock-input" placeholder="?" autocomplete="off" maxlength="20" />
+  </div>
+
   <div id="app">
     <!-- 首頁：生日卡片 Hero -->
     <section id="hero" class="hero">
@@ -48,10 +53,11 @@
   <!-- 答對時：彈出剛解鎖的那張照片 -->
   <div id="photoRevealOverlay" class="photo-reveal-overlay hidden" aria-hidden="true">
     <div class="photo-reveal-card">
-      <p class="photo-reveal-title">解鎖成功！</p>
+      <p id="photoRevealTitle" class="photo-reveal-title">解鎖成功！</p>
       <div class="photo-reveal-img-wrap">
         <img id="photoRevealImg" src="" alt="解鎖的照片" />
       </div>
+      <p id="photoRevealCaption" class="photo-reveal-caption"></p>
       <button type="button" class="btn btn-primary photo-reveal-btn" id="photoRevealClose">繼續</button>
     </div>
   </div>

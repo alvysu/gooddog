@@ -4,6 +4,8 @@
  */
 
 const STORAGE_KEY = 'birthday_unlock_upTo';
+/** 重設進度用的網址參數值，只有你知道；測試完可開「網址?reset=這裡的字」清空進度再傳給對方 */
+const RESET_SECRET = 'birthday_reset';
 
 let config = { title: '', blessing: '', questions: [] };
 let unlockedUpTo = 0;
@@ -21,6 +23,12 @@ const confettiContainer = document.getElementById('confettiContainer');
 const photoRevealOverlay = document.getElementById('photoRevealOverlay');
 const photoRevealImg = document.getElementById('photoRevealImg');
 const photoRevealClose = document.getElementById('photoRevealClose');
+const photoRevealTitle = document.getElementById('photoRevealTitle');
+const photoRevealCaption = document.getElementById('photoRevealCaption');
+const secretUnlockInput = document.getElementById('secretUnlockInput');
+
+/** 密語：輸入後一次解鎖全部照片，不用答題 */
+const UNLOCK_ALL_SECRET = '養到爛狗';
 
 function loadUnlockedUpTo() {
   const raw = localStorage.getItem(STORAGE_KEY);
@@ -31,6 +39,23 @@ function loadUnlockedUpTo() {
 function saveUnlockedUpTo(n) {
   unlockedUpTo = Math.max(unlockedUpTo, n);
   localStorage.setItem(STORAGE_KEY, String(unlockedUpTo));
+}
+
+/** 檢查是否為解鎖全部密語（正規化：trim、去空白） */
+function isUnlockAllSecret(value) {
+  if (typeof value !== 'string') return false;
+  const s = value.trim().replace(/\s+/g, '');
+  return s === UNLOCK_ALL_SECRET;
+}
+
+/** 密語正確時：解鎖全部照片並進入解鎖區 */
+function unlockAllAndShow() {
+  const maxId = config.questions.length
+    ? Math.max(...config.questions.map((q) => q.id))
+    : 20;
+  saveUnlockedUpTo(maxId);
+  if (secretUnlockInput) secretUnlockInput.value = '';
+  showUnlockSection();
 }
 
 function getCurrentQuestionIndex() {
@@ -88,6 +113,8 @@ function renderPhotoGrid() {
     const item = document.createElement('div');
     item.className = 'photo-item' + (isUnlocked ? '' : ' locked');
     if (isUnlocked) {
+      const imgWrap = document.createElement('div');
+      imgWrap.className = 'photo-item-img-wrap';
       const img = document.createElement('img');
       img.src = `/photos/${q.photo}`;
       img.alt = `解鎖照片 ${id}`;
@@ -96,7 +123,15 @@ function renderPhotoGrid() {
         img.style.background = 'linear-gradient(135deg, #f0e8e5, #e8a598)';
         img.alt = '等待載入';
       };
-      item.appendChild(img);
+      imgWrap.appendChild(img);
+      item.appendChild(imgWrap);
+      const captionEl = document.createElement('p');
+      captionEl.className = 'photo-item-caption';
+      captionEl.textContent = q.caption || '';
+      item.appendChild(captionEl);
+      item.setAttribute('role', 'button');
+      item.setAttribute('aria-label', `點擊放大觀賞照片 ${id}`);
+      item.addEventListener('click', () => openPhotoViewer(q.photo, q.caption));
     } else {
       const img = document.createElement('img');
       img.src = `/photos/${q.photo}`;
@@ -133,12 +168,29 @@ function showConfetti() {
 }
 
 /**
- * 答對後彈出該張解鎖照片，點「繼續」後執行 onClose
+ * 開啟照片觀賞彈窗（相簿點擊放大用）
  * @param {string} photoPath 照片檔名，例如 photo1.jpg
- * @param {function} onClose 關閉彈窗後要執行的 callback
+ * @param {string} [caption] 照片說明
  */
-function showPhotoReveal(photoPath, onClose) {
+function openPhotoViewer(photoPath, caption) {
+  showPhotoReveal(photoPath, null, { title: '照片', caption: caption || '' });
+}
+
+/**
+ * 答對後彈出該張解鎖照片，或供相簿點擊放大使用
+ * @param {string} photoPath 照片檔名，例如 photo1.jpg
+ * @param {function} onClose 關閉彈窗後要執行的 callback（可選）
+ * @param {{ title?: string, caption?: string }} options 標題與照片說明
+ */
+function showPhotoReveal(photoPath, onClose, options) {
   if (!photoRevealOverlay || !photoRevealImg) return;
+  const titleText = (options && options.title) !== undefined ? options.title : '解鎖成功！';
+  const captionText = (options && options.caption) !== undefined ? options.caption : '';
+  if (photoRevealTitle) photoRevealTitle.textContent = titleText;
+  if (photoRevealCaption) {
+    photoRevealCaption.textContent = captionText;
+    photoRevealCaption.classList.toggle('hidden', !captionText);
+  }
   photoRevealImg.src = '/photos/' + (photoPath || '');
   photoRevealImg.alt = '解鎖的照片';
   photoRevealOverlay.classList.remove('hidden');
@@ -204,7 +256,7 @@ async function submitAnswer() {
         const newlyUnlocked = photoGrid.querySelector(`.photo-item:nth-child(${idx + 1})`);
         if (newlyUnlocked) newlyUnlocked.classList.add('unlock-pop');
         renderQuestion();
-      });
+      }, { title: '解鎖成功！', caption: q.caption || '' });
     } else {
       showHint(q.hint);
     }
@@ -230,7 +282,15 @@ async function init() {
     applyConfig();
   }
 
-  unlockedUpTo = loadUnlockedUpTo();
+  // 網址帶 ?reset=RESET_SECRET 時清空解鎖進度（測試完可重設，再傳連結給對方）
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('reset') === RESET_SECRET) {
+    localStorage.removeItem(STORAGE_KEY);
+    unlockedUpTo = 0;
+    window.history.replaceState({}, document.title, window.location.pathname);
+  } else {
+    unlockedUpTo = loadUnlockedUpTo();
+  }
 
   btnStart.addEventListener('click', () => {
     showUnlockSection();
@@ -240,6 +300,14 @@ async function init() {
   answerInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') submitAnswer();
   });
+
+  if (secretUnlockInput) {
+    secretUnlockInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && isUnlockAllSecret(secretUnlockInput.value)) {
+        unlockAllAndShow();
+      }
+    });
+  }
 
   if (unlockedUpTo > 0 || getCurrentQuestionIndex() >= 0) {
     showUnlockSection();
